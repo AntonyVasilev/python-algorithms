@@ -23,3 +23,4 @@ while True:
 
     if i == 0:
         print(f'Вы не угадали. Правильный ответ {n}.')
+        break

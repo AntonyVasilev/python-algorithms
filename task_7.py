@@ -13,8 +13,6 @@ for i in range(1, n + 1):
 
 result_2 = n * (n + 1) / 2
 
-print(result_1, result_2)
-
 if result_1 == result_2:
     print('Равенство выполняется')
 else:
