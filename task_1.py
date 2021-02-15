@@ -3,7 +3,7 @@
 Примечание: 8 разных ответов.
 """
 
-result_dict = {2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: []}
+result_dict = {i: [] for i in range(2, 10)}
 
 for num in range(2, 100):
     if num % 2 == 0:
