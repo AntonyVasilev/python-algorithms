@@ -4,14 +4,13 @@
 В конце следует вывести полученную матрицу.
 """
 
-matrix = [[''] * 5 for _ in range(4)]
+matrix = [[0] * 5 for _ in range(4)]
 
 for i in range(4):
     for j in range(4):
         user_num = int(input(f'Введите число. Строка {i + 1} столбец {j + 1}: '))
         matrix[i][j] = user_num
-
-    matrix[i][4] = matrix[i][0] + matrix[i][1] + matrix[i][2] + matrix[i][3]
+        matrix[i][4] += matrix[i][j]
 
 for line in matrix:
     for item in line:

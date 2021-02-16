@@ -24,4 +24,4 @@ for num in range(2, 100):
         result_dict[9].append(num)
 
 for i in range(2, 10):
-    print(f'Числа, кратные {i}: {result_dict[i]}')
+    print(f'Количество чисел кратных {i}: {len(result_dict[i])}')

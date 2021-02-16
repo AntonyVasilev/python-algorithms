@@ -6,11 +6,6 @@
 from random import randint
 
 num_list = [randint(0, 15) for _ in range(10)]
-# num_list = []
-# for i in range(20):
-#     new_num = randint(0, 15)
-#     if new_num not in num_list:
-#         num_list.append(new_num)
 print(f'Исходный массив: {num_list}')
 
 result_sum = 0
@@ -23,7 +18,7 @@ for num in num_list:
     if num < min_num:
         min_num = num
 
-print(f'минимальное число: {min_num}, максимальное число: {max_num}.')
+print(f'Минимальное число: {min_num}, максимальное число: {max_num}.')
 
 max_num_idx = num_list.index(max_num)
 min_num_idx = num_list.index(min_num)
