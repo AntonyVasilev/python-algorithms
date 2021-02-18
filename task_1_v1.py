@@ -44,6 +44,9 @@ def multiples(n):
 # "task_1_v1.multiples(10000)"
 # 1000 loops, best of 5: 4.59 msec per loop
 
+# "task_1_v1.multiples(100000)"
+# 1000 loops, best of 5: 46.7 msec per loop
+
 # cProfile.run('multiples(100)')
 # 186 function calls in 0.000 seconds
 # 1    0.000    0.000    0.000    0.000 task_1_v1.py:9(multiples)
@@ -54,7 +57,12 @@ def multiples(n):
 # 1    0.001    0.001    0.001    0.001 task_1_v1.py:9(multiples)
 # 912    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
 
-# cProfile.run('multiples(1000)')
-# 1832 function calls in 0.001 seconds
-# 1    0.001    0.001    0.001    0.001 task_1_v1.py:9(multiples)
-# 1827    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+# cProfile.run('multiples(10000)')
+# 18293 function calls in 0.007 seconds
+# 1    0.006    0.006    0.007    0.007 task_1_v1.py:9(multiples)
+# 18288    0.001    0.000    0.001    0.000 {method 'append' of 'list' objects}
+
+# cProfile.run('multiples(100000)')
+# 182900 function calls in 0.073 seconds
+# 1    0.060    0.060    0.072    0.072 task_1_v1.py:9(multiples)
+# 182895    0.012    0.000    0.012    0.000 {method 'append' of 'list' objects}
