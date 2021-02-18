@@ -42,6 +42,9 @@ def sieve(n):
 # "task_2_sieve.sieve(20)"
 # 1000 loops, best of 5: 537 usec per loop
 
+# "task_2_sieve.sieve(50)"
+# 1000 loops, best of 5: 5.83 msec per loop
+
 # cProfile.run('sieve(1)')
 # 7 function calls in 0.000 seconds
 # 1    0.000    0.000    0.000    0.000 task_2_sieve.py:22(<listcomp>)
@@ -65,3 +68,9 @@ def sieve(n):
 # 70    0.000    0.000    0.000    0.000 task_2_sieve.py:22(<listcomp>)
 # 70    0.000    0.000    0.000    0.000 {built-in method builtins.len}
 # 70    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+
+# cProfile.run('sieve(50)')
+# 688 function calls in 0.006 seconds
+# 228    0.001    0.000    0.001    0.000 task_2_sieve.py:23(<listcomp>)
+# 228    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+# 228    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
