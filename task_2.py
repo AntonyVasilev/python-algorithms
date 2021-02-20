@@ -8,6 +8,11 @@
 from collections import deque
 from math import pow
 
+hex_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
+                'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15}
+opposite_hex_dict = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9',
+                10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
+
 
 def add_digits(hex_list):
     len_0 = len(hex_list[0])
@@ -23,27 +28,24 @@ def add_digits(hex_list):
 
 
 def is_hex_number(num_list):
-    hex_digits_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+    # hex_digits_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
     result = True
 
     for digit in num_list:
-        if digit not in hex_digits_list:
+        if digit not in hex_dict.keys():
             result = False
             break
     return result
 
 
 def hex_sum(hex_list):
-    hex_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
-                'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15}
-    opposite_hex_dict = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9',
-                10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
-    hex_num_1 = hex_list[0]
-    hex_num_2 = hex_list[1]
+    hex_num_1 = hex_list[0].copy()
+    hex_num_2 = hex_list[1].copy()
     hex_num_1.reverse()
     hex_num_2.reverse()
     result = deque([])
     add_digit = 0
+
     for j in range(len(hex_num_1)):
         spam = hex_dict[hex_num_1[j]] + hex_dict[hex_num_2[j]] + add_digit
         if spam < 16:
@@ -54,15 +56,62 @@ def hex_sum(hex_list):
             add_digit = 1
 
     if add_digit == 1:
-        result.appendleft('1')
+        result.appendleft(str(add_digit))
+    return result
+
+
+def hex_multiple(hex_list):
+    hex_num_1 = hex_list[0].copy()
+    hex_num_2 = hex_list[1].copy()
+    hex_num_1.reverse()
+    hex_num_2.reverse()
+    result = deque([])
+    result_list = []
+    add_digit = 0
+
+    for i in range(len(hex_num_1)):
+        temp_list = deque([])
+        for j in range(len(hex_num_2)):
+            if hex_num_2[i] == '0':
+                break
+            spam = hex_dict[hex_num_1[j]] * hex_dict[hex_num_2[i]] + add_digit
+            if spam < 16:
+                temp_list.appendleft(opposite_hex_dict[spam])
+                add_digit = 0
+            else:
+                temp_list.appendleft(opposite_hex_dict[spam % 16])
+                add_digit = spam // 16
+
+        if hex_num_2[i] != '0':
+            if add_digit > 0:
+                temp_list.appendleft(str(add_digit))
+                temp_list.extendleft(['0'] * (len(hex_num_1) - i - 2))
+                add_digit = 0
+            else:
+                temp_list.extendleft(['0'] * (len(hex_num_1) - i - 1))
+            temp_list.extend(['0'] * i)
+            result_list.append(temp_list)
+
+    # print(result_list)
+
+    result = hex_sum([result_list[0], result_list[1]])
+    # print(result)
+    if len(result_list) > 2:
+        for i in range(2, len(hex_num_1)):
+            result = hex_sum([result, result_list[i]])
+            # print(result)
+
+    if add_digit > 0:
+        result.appendleft(str(add_digit))
     return result
 
 
 def hex_to_int(hex_num):
-    hex_dict = {'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15}
+    # hex_dict = {'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15}
     result = 0
     temp_list = hex_num.copy()
     temp_list.reverse()
+
     for j, digit in enumerate(temp_list):
         if digit.isdigit():
             result += int(digit) * pow(16, j)
@@ -72,7 +121,7 @@ def hex_to_int(hex_num):
 
 
 def int_to_hex(int_num):
-    hex_dict = {10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
+    # hex_dict = {10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
     result = []
 
     while int_num >= 16:
@@ -80,13 +129,13 @@ def int_to_hex(int_num):
         if spam < 10:
             result.append(str(spam))
         else:
-            result.append(hex_dict[spam])
+            result.append(opposite_hex_dict[spam])
         int_num //= 16
 
     if int_num < 10:
         result.append(str(int_num))
     else:
-        result.append(hex_dict[int_num])
+        result.append(opposite_hex_dict[int_num])
 
     result.reverse()
     return result
@@ -94,8 +143,8 @@ def int_to_hex(int_num):
 
 hex_nums = []
 
-user_num_1 = 'a2'
-user_num_2 = 'c4f'
+user_num_2 = 'a2'
+user_num_1 = 'c4f'
 
 hex_nums.append(deque(user_num_1.upper()))
 hex_nums.append(deque(user_num_2.upper()))
@@ -112,12 +161,11 @@ add_digits(hex_nums)
 print(hex_nums)
 
 
-print(hex_sum(hex_nums))
+print(f'Сумма {hex_sum(hex_nums)}')
+print(f'Произведение {hex_multiple(hex_nums)}')
 
-
-# print(int_to_hex(hex_to_int(hex_nums[0]) + hex_to_int(hex_nums[1])))
-# print(int_to_hex(hex_to_int(hex_nums[0]) * hex_to_int(hex_nums[1])))
-
+print(f'Сумма {int_to_hex(hex_to_int(hex_nums[0]) + hex_to_int(hex_nums[1]))}')
+print(f'Произведение {int_to_hex(hex_to_int(hex_nums[0]) * hex_to_int(hex_nums[1]))}')
 
 
 
