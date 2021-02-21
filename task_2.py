@@ -9,11 +9,12 @@ from collections import deque
 from math import pow
 
 hex_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
-                'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15}
+            'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15}
 opposite_hex_dict = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9',
-                10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
+                     10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
 
 
+# Добавляет недостающее количество нулей перед числом с меньшим количеством разрядов, чтобы их число одинаковым
 def add_digits(hex_list):
     len_0 = len(hex_list[0])
     len_1 = len(hex_list[1])
@@ -27,8 +28,8 @@ def add_digits(hex_list):
             hex_list[0].extendleft(['0'] * add_len)
 
 
+# Проверяет, все ли символы в введенных числах соответствуют допустимым в шестнадцатеричной системе счисления
 def is_hex_number(num_list):
-    # hex_digits_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
     result = True
 
     for digit in num_list:
@@ -38,6 +39,7 @@ def is_hex_number(num_list):
     return result
 
 
+# Расчет суммы двух шестнадцатеричных чисел
 def hex_sum(hex_list):
     hex_num_1 = hex_list[0].copy()
     hex_num_2 = hex_list[1].copy()
@@ -60,19 +62,19 @@ def hex_sum(hex_list):
     return result
 
 
+# Расчет произведения двух шестнадцатеричных чисел
 def hex_multiple(hex_list):
     hex_num_1 = hex_list[0].copy()
     hex_num_2 = hex_list[1].copy()
     hex_num_1.reverse()
     hex_num_2.reverse()
-    result = deque([])
     result_list = []
     add_digit = 0
 
     for i in range(len(hex_num_1)):
         temp_list = deque([])
         for j in range(len(hex_num_2)):
-            if hex_num_2[i] == '0':
+            if hex_num_2[i] == '0':     # Если во втором числе присутствует цифра 0, то для нее расчет не производится
                 break
             spam = hex_dict[hex_num_1[j]] * hex_dict[hex_num_2[i]] + add_digit
             if spam < 16:
@@ -82,9 +84,9 @@ def hex_multiple(hex_list):
                 temp_list.appendleft(opposite_hex_dict[spam % 16])
                 add_digit = spam // 16
 
-        if hex_num_2[i] != '0':
+        if hex_num_2[i] != '0':     # Также условие для обработки цифры 0
             if add_digit > 0:
-                temp_list.appendleft(str(add_digit))
+                temp_list.appendleft(opposite_hex_dict[add_digit])
                 temp_list.extendleft(['0'] * (len(hex_num_1) - i - 2))
                 add_digit = 0
             else:
@@ -92,22 +94,18 @@ def hex_multiple(hex_list):
             temp_list.extend(['0'] * i)
             result_list.append(temp_list)
 
-    # print(result_list)
-
     result = hex_sum([result_list[0], result_list[1]])
-    # print(result)
     if len(result_list) > 2:
         for i in range(2, len(hex_num_1)):
             result = hex_sum([result, result_list[i]])
-            # print(result)
 
     if add_digit > 0:
         result.appendleft(str(add_digit))
     return result
 
 
+# Функция перевода числа из шестнадцатеричной системы счисления в десятичную
 def hex_to_int(hex_num):
-    # hex_dict = {'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15}
     result = 0
     temp_list = hex_num.copy()
     temp_list.reverse()
@@ -120,6 +118,7 @@ def hex_to_int(hex_num):
     return int(result)
 
 
+# Функция перевода числа из десятичной системы счисления в шестнадцатеричную
 def int_to_hex(int_num):
     # hex_dict = {10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
     result = []
@@ -143,29 +142,30 @@ def int_to_hex(int_num):
 
 hex_nums = []
 
-user_num_2 = 'a2'
-user_num_1 = 'c4f'
-
-hex_nums.append(deque(user_num_1.upper()))
-hex_nums.append(deque(user_num_2.upper()))
+# user_num_2 = 'a2'
+# user_num_1 = 'c4f'
+#
+# hex_nums.append(deque(user_num_1.upper()))
+# hex_nums.append(deque(user_num_2.upper()))
 #
 # num_1 = hex_to_int(hex_nums[0])
 # num_2 = hex_to_int(hex_nums[1])
 
-# for i in range(2):
-#     user_num = input(f'Введите {i + 1} шестнадцатеричное число: ')
-#     hex_nums.append(deque(user_num.upper()))
+for i in range(2):
+    user_num = input(f'Введите {i + 1} шестнадцатеричное число: ')
+    hex_nums.append(deque(user_num.upper()))
 
 add_digits(hex_nums)
 
-print(hex_nums)
+print(hex_nums, sep='\n')
 
+# Вариант 1
+# Сумма и произведение производится "в столбик" в соответствии с методикой из расчета
+print(f'Сумма 1: {list(hex_sum(hex_nums))}')
+print(f'Произведение 1: {list(hex_multiple(hex_nums))}')
 
-print(f'Сумма {hex_sum(hex_nums)}')
-print(f'Произведение {hex_multiple(hex_nums)}')
-
-print(f'Сумма {int_to_hex(hex_to_int(hex_nums[0]) + hex_to_int(hex_nums[1]))}')
-print(f'Произведение {int_to_hex(hex_to_int(hex_nums[0]) * hex_to_int(hex_nums[1]))}')
-
-
-
+# Вариант 2
+# Сначала числа переводятся в десятичную систему счисления, в ней производятся сложение и умножение соответственно,
+# а потом результат переводится обратно в шестнадцатеричную систему счисления
+print(f'Сумма 2: {int_to_hex(hex_to_int(hex_nums[0]) + hex_to_int(hex_nums[1]))}')
+print(f'Произведение 2: {int_to_hex(hex_to_int(hex_nums[0]) * hex_to_int(hex_nums[1]))}')
