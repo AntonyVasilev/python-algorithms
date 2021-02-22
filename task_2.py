@@ -120,7 +120,6 @@ def hex_to_int(hex_num):
 
 # Функция перевода числа из десятичной системы счисления в шестнадцатеричную
 def int_to_hex(int_num):
-    # hex_dict = {10: 'A', 11: 'B', 12: 'C', 13: 'D', 14: 'E', 15: 'F'}
     result = []
 
     while int_num >= 16:
@@ -141,15 +140,6 @@ def int_to_hex(int_num):
 
 
 hex_nums = []
-
-# user_num_2 = 'a2'
-# user_num_1 = 'c4f'
-#
-# hex_nums.append(deque(user_num_1.upper()))
-# hex_nums.append(deque(user_num_2.upper()))
-#
-# num_1 = hex_to_int(hex_nums[0])
-# num_2 = hex_to_int(hex_nums[1])
 
 for i in range(2):
     user_num = input(f'Введите {i + 1} шестнадцатеричное число: ')
