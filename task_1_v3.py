@@ -22,7 +22,6 @@ def is_hex_number(num_list):
 
 def show_size(obj, level=0):
     result = sys.getsizeof(obj)
-    size = 0
     print('\t' * level, f'type= {obj.__class__}, size= {sys.getsizeof(obj)}, object= {obj}')
 
     if hasattr(obj, '__iter__'):
@@ -57,23 +56,50 @@ if not stop_sign:
     print(f'Сумма: {list(hex(nums_sum).upper())}')
     print(f'Произведение: {list(hex(nums_mult).upper())}')
 
-# print(sys.version, sys.platform)
-# 3.8.5 (default, Sep  3 2020, 21:29:08) [MSC v.1916 64 bit (AMD64)] win32
-#     print(show_size(hex_nums))
-    # print(sys.getsizeof(hex_nums[0]))
-    # print(sys.getsizeof(hex_nums[1]))
-    # print((sys.getsizeof(num_1)))
-    # print((sys.getsizeof(num_2)))
-    # print((sys.getsizeof(nums_sum)))
-    # print((sys.getsizeof(nums_mult)))
 
 overall_size = 0
 var_list = [el for el in dir() if '__' not in el]
-# print(globals()[var_list[0]])
+
 for var in var_list:
     print('*' * 50)
     current_size = show_size(globals()[var])
     overall_size += current_size
 
 print('*' * 50)
-print(f'Общая память, занимаемая переменными: {overall_size}')
+print(f'Общая память, занимаемая переменными: {overall_size} байт')
+
+
+# print(sys.version, sys.platform)
+# 3.8.5 (default, Sep  3 2020, 21:29:08) [MSC v.1916 64 bit (AMD64)] win32
+#     print(show_size(hex_nums))
+
+"""
+**************************************************
+ type= <class 'list'>, size= 88, object= ['AFF', 'DD']
+	 type= <class 'str'>, size= 52, object= AFF
+	 type= <class 'str'>, size= 51, object= DD
+**************************************************
+ type= <class 'int'>, size= 28, object= 1
+**************************************************
+ type= <class 'function'>, size= 136, object= <function is_hex_number at 0x0000024C88765F70>
+**************************************************
+ type= <class 'int'>, size= 28, object= 2815
+**************************************************
+ type= <class 'int'>, size= 28, object= 221
+**************************************************
+ type= <class 'int'>, size= 28, object= 622115
+**************************************************
+ type= <class 'int'>, size= 28, object= 3036
+**************************************************
+ type= <class 'int'>, size= 28, object= 467
+**************************************************
+ type= <class 'function'>, size= 136, object= <function show_size at 0x0000024C8890E4C0>
+**************************************************
+ type= <class 'bool'>, size= 24, object= False
+**************************************************
+ type= <class 'module'>, size= 72, object= <module 'sys' (built-in)>
+**************************************************
+ type= <class 'str'>, size= 51, object= dd
+**************************************************
+Общая память, занимаемая переменными: 778 байт
+"""
