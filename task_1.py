@@ -3,7 +3,7 @@
 промежутке [-100; 100). Выведите на экран исходный и отсортированный массивы.
 """
 
-import random
+from random import shuffle
 import cProfile
 
 
@@ -42,7 +42,7 @@ def bubble_sort_optimized(num_array):
 
 if __name__ == '__main__':
     array = [num for num in range(-100, 100)]
-    random.shuffle(array)
+    shuffle(array)
     print(array)
 
     array = bubble_sort_optimized(array)
