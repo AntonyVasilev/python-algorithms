@@ -14,7 +14,7 @@ shacks_count = 0
 
 for i in range(n):
     for j in range(n):
-        if graph[i][j] == 1 and is_shacked[i][j] is False:
+        if graph[i][j] == 1 and not is_shacked[i][j]:
             shacks_count += 1
             is_shacked[j][i] = True
 
