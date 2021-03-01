@@ -9,7 +9,9 @@ graph = [[1 for _ in range(n)] for _ in range(n)]
 for k in range(n):
     graph[k][k] = 0
 
-print(*graph, sep='\n')
+# print('-' * 80)
+# print(*graph, sep='\n')
+# print('-' * 80)
 shacks_count = 0
 
 for i in range(n):
@@ -22,4 +24,4 @@ print(f'Количество рукопожатий: {shacks_count}')
 
 # Следующая формула применяется в статистике для определения количества взаимных проверок.
 # Здесь использую ее для проверки результата.
-print(f'Количество рукопожатий: {n * (n-1) // 2}')
+print(f'Контрольное количество рукопожатий: {n * (n-1) // 2}')
