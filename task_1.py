@@ -27,7 +27,7 @@ def substrings_count(string):
 
 
 s = input('Введите строку: ')
-print(substrings_count(s))
+print(f'Количество подстрок: {substrings_count(s)}')
 
 
 
