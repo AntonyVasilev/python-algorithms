@@ -1,7 +1,7 @@
 """
 Закодируйте любую строку по алгоритму Хаффмана.
 """
-from collections import Counter, namedtuple
+from collections import Counter
 
 
 class MyNode:
@@ -10,9 +10,9 @@ class MyNode:
         self.left = left
         self.right = right
 
-    def walk(self, code, acc):
-        self.left.walk(code, acc + '0')
-        self.right.walk(code, acc + '1')
+    def walk(self, code, path):
+        self.left.walk(code, path + '0')
+        self.right.walk(code, path + '1')
 
 
 class MyLeaf:
@@ -20,43 +20,27 @@ class MyLeaf:
     def __init__(self, char):
         self.char = char
 
-    def walk(self, code, acc):
-        code[self.char] = acc or '0'
-
-
-class Node(namedtuple('Node', ['left', 'right'])):
-
-    def walk(self, code, acc):
-        self.left.walk(code, acc + '0')
-        self.right.walk(code, acc + '1')
-
-
-class Leaf(namedtuple('Leaf', ['char'])):
-
-    def walk(self, code, acc):
-        code[self.char] = acc or '0'
+    def walk(self, code, path):
+        code[self.char] = path or '0'
 
 
 def huffman_codding(string):
     assert len(string) > 0, 'Строка не может быть пустой'
 
-    h = []
-    for char, freq in Counter(s).items():
-        # h.append((freq, len(h), Leaf(char)))
-        h.append((freq, len(h), MyLeaf(char)))
+    chars_list = []
+    for char, freq in Counter(string).items():
+        chars_list.append((freq, MyLeaf(char)))
+    chars_list.sort(key=lambda x: x[0])
 
-    count = len(h)
-    while len(h) > 1:
-        freq_1, _count_1, left = h.pop(0)
-        freq_2, _count_2, right = h.pop(0)
-        # h.append((freq_1 + freq_2, count, Node(left, right)))
-        h.append((freq_1 + freq_2, count, MyNode(left, right)))
-        h.sort(key=lambda x: x[0])
-        count += 1
+    while len(chars_list) > 1:
+        freq_1, left = chars_list.pop(0)
+        freq_2, right = chars_list.pop(0)
+        chars_list.append((freq_1 + freq_2, MyNode(left, right)))
+        chars_list.sort(key=lambda x: x[0])
 
-    [(_freq, _count, root)] = h
+    [(_freq, tree)] = chars_list
     code = {}
-    root.walk(code, '')
+    tree.walk(code, '')
     return code
 
 
@@ -64,10 +48,10 @@ if __name__ == '__main__':
     s = input('Введите строку: ')
 
     code_dict = huffman_codding(s)
-    encoded_string = "".join(code_dict[char] for char in s)
+    encoded_string = ' '.join(code_dict[char] for char in s)
     print('Таблица кодов символов:')
     for ch in code_dict:
         print(f'{ch}: {code_dict[ch]}')
 
-    print('*' * 80)
+    print('*' * 40)
     print(f'Закодированная строка:\n{encoded_string}')
