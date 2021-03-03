@@ -23,7 +23,7 @@ def substrings_count(string):
             spam = hashlib.sha1(string[j: j + i].encode('utf-8')).hexdigest()
             substrings.add(spam)
 
-    return len(substrings)
+    return len(substrings) - 1
 
 
 s = input('Введите строку: ')
